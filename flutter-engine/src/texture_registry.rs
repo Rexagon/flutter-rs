@@ -162,7 +162,7 @@ pub struct TextureFrame {
 impl TextureFrame {
     pub fn new<F>(target: u32, name: u32, format: u32, destruction_callback: F) -> TextureFrame
     where
-        F: FnOnce() -> () + 'static + Send,
+        F: FnOnce() + 'static + Send,
     {
         Self {
             target,

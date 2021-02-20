@@ -117,7 +117,7 @@ impl FlutterWindow {
             glfw::OpenGlProfileHint::Core,
         ));
         glfw.window_hint(glfw::WindowHint::ContextCreationApi(
-            glfw::ContextCreationApi::Egl,
+            glfw::ContextCreationApi::Native,
         ));
 
         // Create window
