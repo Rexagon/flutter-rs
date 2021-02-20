@@ -9,11 +9,13 @@ repository = "https://github.com/flutter-rs/flutter-rs"
 license = "MIT"
 
 [dependencies]
-copypasta = "0.7.1"
+copypasta = "0.7"
 flutter-engine-sys = { path = "../flutter-engine-sys" }
 flutter-engine = { path = "../flutter-engine" }
 flutter-plugins = { path = "../flutter-plugins" }
-gl = "0.14.0"
+gl = "0.14"
+glutin = "0.26"
 locale_config = "0.3"
 log = "0.4"
 parking_lot = "0.11"
+thiserror = "1.0"

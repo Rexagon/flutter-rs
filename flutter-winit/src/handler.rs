@@ -8,11 +8,11 @@ use flutter_plugins::textinput::TextInputHandler;
 use flutter_plugins::window::{PositionParams, WindowHandler};
 use glutin::event_loop::EventLoopProxy;
 use parking_lot::Mutex;
-use std::error::Error;
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_void};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use thiserror::Error;
 
 // TODO: Investigate removing mutex
 pub struct WinitPlatformTaskHandler {
@@ -87,11 +87,11 @@ pub struct WinitPlatformHandler {
 }
 
 impl WinitPlatformHandler {
-    pub fn new(context: Arc<Mutex<Context>>) -> Result<Self, Box<dyn Error>> {
-        Ok(Self {
-            clipboard: ClipboardContext::new()?,
-            context,
-        })
+    pub fn new(context: Arc<Mutex<Context>>) -> Result<Self, ClipboardError> {
+        match ClipboardContext::new() {
+            Ok(clipboard) => Ok(Self { clipboard, context }),
+            Err(_) => Err(ClipboardError::ClipboardUnavailable),
+        }
     }
 }
 
@@ -198,4 +198,10 @@ impl TextInputHandler for WinitTextInputHandler {
     fn show(&mut self) {}
 
     fn hide(&mut self) {}
+}
+
+#[derive(Error, Debug)]
+pub enum ClipboardError {
+    #[error("Clipboard not available!")]
+    ClipboardUnavailable,
 }
